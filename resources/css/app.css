@@ -1,0 +1,4 @@
+@tailwind base;
+/* @tailwindcss/typography; */
+@tailwind components;
+@tailwind utilities;
