@@ -122,10 +122,11 @@ export default {
         submit() {
             if (this.$refs.photo) {
                 this.form.cover = this.$refs.photo.files[0];
+                console.log(this.form.cover)
             }
             this.form.desc = this.editor.getHTML()
-            // console.log(json)
-
+            console.log(this.form)
+            console.log(this.form)
             this.$inertia.post(route('posts.store'), this.form)
         },
         previewImage(e) {

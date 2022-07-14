@@ -21,6 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
+
         $posts = Post::all();
         return Inertia::render('PostDashboard',['posts' => $posts]);
         // return view('posts.index', ['posts' => $posts]);
@@ -51,6 +52,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+
         $validator = Validator::make($request->all(), [
             "title"     => "required|unique:posts,title",
             "cover"     => "required",
@@ -71,7 +73,7 @@ class PostController extends Controller
         $cover              = $request->file('cover');
         if($cover){
             $cover_path     = $cover->store('images/blog', 'public');
-            $post->cover    = $cover_path;
+            $post->cover    = "/storage/$cover_path";
         }
         $post->title        = $request->title;
         $post->slug         = Str::slug($request->title);
@@ -88,7 +90,7 @@ class PostController extends Controller
 
     }
 
-    /**
+     /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -114,7 +116,7 @@ class PostController extends Controller
             'post' => $post,
             'categories' => $categories,
             'tags' => $tags,
-            'post_tag' => $post->tags()
+            'post_tag' => $post->tags
         ]);
     }
 
@@ -127,8 +129,10 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $validator = Validator::make($request->all(), [
             "title"     => "required|unique:posts,title,".$id,
+            "cover"     => "required",
             "desc"      => "required",
             "category"  => "required",
             "tags"      => "array|required",
@@ -143,17 +147,14 @@ class PostController extends Controller
         }
 
         $post = Post::findOrFail($id);
-
         $new_cover = $request->file('cover');
-
         if($new_cover){
-            if($post->cover && file_exists(storage_path('app/public/' . $post->cover))){
-                Storage::delete('public/'. $post->cover);
+            $sub_cover = substr("$post->cover",8);
+            if($post->cover && Storage::disk('public')->exists($sub_cover)){
+                Storage::disk('public')->delete($sub_cover);
             }
-
             $new_cover_path = $new_cover->store('images/blog', 'public');
-
-            $post->cover = $new_cover_path;
+            $post->cover = "/storage/$new_cover_path";
         }
 
         $post->title        = $request->title;

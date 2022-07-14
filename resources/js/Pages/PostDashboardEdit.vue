@@ -54,8 +54,8 @@
             <div class="relative z-0 w-full mb-6 group">
                 <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Pilih tag</label>
                 <div>
-                    <div class="flex items-center mb-4" v-for="tag in tags">
-                        <input :checked="checked(form.tags) ? true : false " v-model="form.tags" :value="tag.id" id="default-checkbox" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <div class="flex items-center mb-4" v-for="(tag,index) in tag_checked " :key="index">
+                        <input v-model="tag.checked" @change="chekedTag" :value="tag.id" type="checkbox" class="tag w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ tag.name }}</label>
                     </div>
                 </div>
@@ -77,6 +77,7 @@ import {
 } from '@tiptap/vue-3';
 import EditorButton from '../Components/Dashboard/EditorButton.vue';
 import StarterKit from '@tiptap/starter-kit';
+
 export default {
     components: {
         AdminLayout,
@@ -88,28 +89,30 @@ export default {
     data() {
         return {
             form: {
-                cover: '/storage/' + this.post.cover,
+                cover: this.post.cover,
                 title: this.post.title,
                 slug: this.post.slug,
                 desc: this.post.desc,
                 keywords: this.post.keywords,
                 meta_desc: this.post.meta_desc,
                 category: this.post.category_id,
-                tags: this.post.tags
+                tags: []
             },
             url: null,
             editor: {
                 type: Object,
                 default: null
             },
+            tag_checked: [],
+            tagsku: []
         }
     },
     props: {
         tags: Object,
-        category: Object,
+        categories: Object,
         post: Object,
         action: String,
-        post_tag : Object
+        post_tag: Object
     },
     setup(props) {
         const editor = useEditor({
@@ -124,24 +127,53 @@ export default {
     },
     methods: {
         submit(id) {
+            this.tag_checked.forEach(tag => {
+                if (tag.checked == true) {
+                    this.form.tags.push(tag.id)
+                }
+            })
             if (this.$refs.photo) {
                 this.form.cover = this.$refs.photo.files[0];
+                console.log(this.form.cover)
             }
             this.form.desc = this.editor.getHTML()
-            
-            this.$inertia.patch(route('posts.update', id), this.form)
+            console.log(this.form)
+            this.$inertia.post(route('posts.update', id), this.form)
         },
         previewImage(e) {
             const file = e.target.files[0];
             this.url = URL.createObjectURL(file);
         },
-        checked(id) {
-            // let check = id in this.tags.id
-            console.log(this.post_tag)
-            // console.log(check)
-            // return check
+        chekedTag() {
+            console.log(this.tag_checked)
         }
-    }
+
+    },
+
+    mounted() {
+        const check = document.querySelector('#app > div > section > div > div > div > form > div:nth-child(8) > div > div:nth-child(1) > input')
+        // this.$refs.check0[0].checked=true
+        // console.log(this.$refs.check0[0].checked)
+
+    },
+    created() {
+        const arr_post_tag = [];
+        this.post_tag.forEach(ptag => {
+            arr_post_tag.push(ptag.id)
+        })
+        this.tags.forEach(tag => {
+            var check = arr_post_tag.includes(tag.id)
+            this.tag_checked.push({
+                'id': tag.id,
+                'name': tag.name,
+                'checked': check
+            })
+        });
+
+        console.log(this.form.tags)
+        // console.log(this.$refs.tag.value)
+    },
+
 }
 </script>
 

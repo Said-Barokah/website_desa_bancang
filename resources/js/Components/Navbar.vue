@@ -15,7 +15,6 @@
         <li>
             <Link :href="route('home')" class="text-sm text-white font-bold hover:text-slate-200">Beranda</Link>
         </li>
-
         <li>
             <Link :href="route('home')" class="text-sm text-white font-bold hover:text-slate-200">Profil Desa</Link>
         </li>
@@ -40,7 +39,7 @@
             </div>
             <ul class="py-1" aria-labelledby="dropdown">
                 <li>
-                    <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                    <Link href="/dashboard" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
                 </li>
                 <li>
                     <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>

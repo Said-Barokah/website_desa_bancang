@@ -22,7 +22,9 @@ Route::middleware('verified.check')->group(function(){
         Route::resource('/posts', PostController::class);
         Route::resource('/categories', CategoryController::class);
         Route::resource('/tags', TagController::class);
+        Route::post('posts/{post}',[PostController::class,'update'])->name('posts.update');
     });
+
 });
 
 
