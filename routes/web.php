@@ -8,6 +8,13 @@ use App\Http\Controllers\FrontPostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ApparatusPositionController;
+use App\Http\Controllers\BPDStructureController;
+use App\Http\Controllers\ManagementPositionController;
+use App\Http\Controllers\VillagerController;
+use App\Http\Controllers\VillageApparatusStructureController;
+use App\Models\ManagementPosition;
+
 Route::middleware('verified.check')->group(function(){
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/news', [FrontPostController::class, 'index'])->name('front.posts.index');
@@ -23,6 +30,13 @@ Route::middleware('verified.check')->group(function(){
         Route::resource('/categories', CategoryController::class);
         Route::resource('/tags', TagController::class);
         Route::post('posts/{post}',[PostController::class,'update'])->name('posts.update');
+        Route::resource('apparatus-position',ApparatusPositionController::class);
+        Route::resource('village-apparatus-structure',VillageApparatusStructureController::class);
+        Route::post('village-apparatus-structure/{id}',[VillageApparatusStructureController::class,'update'])->name('village-apparatus-structure.update');
+        Route::resource('villagers',VillagerController::class);
+        Route::resource('management-position',ManagementPositionController::class);
+        Route::resource('BPD-structure',BPDStructureController::class);
+        Route::post('BPD-structure/{id}',[BPDStructureController::class,'update'])->name('BPD-structure.update');
     });
 
 });

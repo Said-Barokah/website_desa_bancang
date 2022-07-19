@@ -35,12 +35,56 @@
                 </ul>
             </li>
             <li>
+                <button type="button" class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" @click="isHiddenApparatur = !isHiddenApparatur ">
+                    <RemixIcon icon="user-2-fill" style="width:24px; height: 24px;"></RemixIcon>
+                    <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Perangkat Desa</span>
+                    <svg sidebar-toggle-item="" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <ul v-if="!isHiddenApparatur" class="py-2 space-y-2 pl-11">
+                    <li class="flex item items-center">
+                        <RemixIcon icon="organization-chart" style="width:24px; height: 24px;"></RemixIcon>
+                        <Link href="/dashboard/village-apparatus-structure" class="flex items-center p-2 pl-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Struktur Perangkat Desa</Link>
+                    </li>
+                    <li class="flex item items-center">
+                        <RemixIcon icon="award-line" style="width:24px; height: 24px;"></RemixIcon>
+                        <Link href="/dashboard/apparatus-position " class="flex items-center p-2 pl-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Jabatan</Link>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <button type="button" class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" @click="isHiddenManager = !isHiddenManager ">
+                    <RemixIcon icon="user-settings-fill" style="width:24px; height: 24px;"></RemixIcon>
+                    <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">BPD</span>
+                    <svg sidebar-toggle-item="" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <ul v-if="!isHiddenManager" class="py-2 space-y-2 pl-11">
+                    <li class="flex item items-center">
+                        <RemixIcon icon="team-line" style="width:24px; height: 24px;"></RemixIcon>
+                        <Link href="/dashboard/BPD-structure" class="flex items-center p-2 pl-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Struktur BPD</Link>
+                    </li>
+                    <li class="flex item items-center">
+                        <RemixIcon icon="node-tree" style="width:24px; height: 24px;"></RemixIcon>
+                        <Link href="/dashboard/management-position" class="flex items-center p-2 pl-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Posisi</Link>
+                    </li>
+                </ul>
+            </li>
+            <li>
                 <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
                 </a>
+            </li>
+            <li>
+                <Link href="/dashboard/villagers" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <RemixIcon icon="user-location-fill" style="width:24px; height: 24px;"></RemixIcon>
+                    <span class="ml-3">Masyarakat Desa</span>
+                </Link>
             </li>
         </ul>
     </div>
@@ -57,9 +101,11 @@ export default {
         Link,
         RemixIcon
     },
-    data(){
-        return{
-            isHiddenNews : true
+    data() {
+        return {
+            isHiddenNews: true,
+            isHiddenApparatur: true,
+            isHiddenManager: true
         }
     }
 }

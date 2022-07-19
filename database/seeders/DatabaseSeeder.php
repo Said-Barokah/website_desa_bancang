@@ -8,7 +8,6 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\PostSeeder;
-use App\Models\Post;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -24,9 +23,14 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        // $this->call(RoleSeeder::class);
-        // $this->call(UserSeeder::class);
-        $this->call(PostSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(ApparatusPositionSeeder::class);
+        $this->call(ManagementPositionSeeder::class);
+        $this->call(VillagerSeeder::class);
+        $this->call(VillageApparatusStructureSeeder::class);
+        $this->call(BPDStructureSeeder::class);
+        // $this->call(PostSeeder::class):
         // Post::factory(150)->create();
         // Category::factory(15)->create();
     }
