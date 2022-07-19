@@ -73,17 +73,15 @@
                 </ul>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
-                </a>
+                <Link href="/dashboard/villagers" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <RemixIcon icon="user-location-fill" style="width:24px; height: 24px;"></RemixIcon>
+                <span class="ml-3">Masyarakat Desa</span>
+                </Link>
             </li>
             <li>
-                <Link href="/dashboard/villagers" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <RemixIcon icon="user-location-fill" style="width:24px; height: 24px;"></RemixIcon>
-                    <span class="ml-3">Masyarakat Desa</span>
+                <Link :href="route('account-setting.index')" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <RemixIcon icon="settings-4-fill" style="width:24px; height: 24px;"></RemixIcon>
+                <span class="flex-1 ml-3 whitespace-nowrap">Setting Akun</span>
                 </Link>
             </li>
         </ul>

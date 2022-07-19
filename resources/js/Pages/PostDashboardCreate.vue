@@ -4,7 +4,7 @@
         <Link :href="route('posts.index')" as="button" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-5">Back</Link>
         <form class="w-full" method="post" @submit.prevent="submit">
             <div class="relative z-0 w-full mb-6 group">
-                <label for="File">File Upload</label>
+                <label for="File">Upload Gambar Cover</label>
                 <input type="file" @change="previewImage" ref="photo" class="
                                         w-full
                                         px-4
@@ -120,7 +120,7 @@ export default {
     },
     methods: {
         submit() {
-            if (this.$refs.photo) {
+            if (this.$refs.photo.files[0]) {
                 this.form.cover = this.$refs.photo.files[0];
                 console.log(this.form.cover)
             }

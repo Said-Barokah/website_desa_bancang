@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountSettingController;
 use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
@@ -37,6 +38,9 @@ Route::middleware('verified.check')->group(function(){
         Route::resource('management-position',ManagementPositionController::class);
         Route::resource('BPD-structure',BPDStructureController::class);
         Route::post('BPD-structure/{id}',[BPDStructureController::class,'update'])->name('BPD-structure.update');
+        Route::get('account-setting',[AccountSettingController::class,'index'])->name('account-setting.index');
+        Route::post('account-setting',[AccountSettingController::class,'update'])->name('account-setting.update');
+        Route::post('account-setting-password',[AccountSettingController::class,'updatePassword'])->name('account-setting-password.update');
     });
 
 });

@@ -94,11 +94,12 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $validate = $request->validate([
-            "name" => ['required', 'unique:categories'],
-            "slug" => ['required', 'unique:categories'],
+            "name" => ['required'],
+            "slug" => ['required'],
             "keywords" => ['required'],
             "meta_desc" => ['required']
         ]);
+
         $category = Category::findOrFail($id);
         $category->name = $request->name;
         $category->slug = Str::slug($request->slug);
