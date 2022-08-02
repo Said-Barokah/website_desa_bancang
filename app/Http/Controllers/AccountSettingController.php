@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class AccountSettingController extends Controller
 {
@@ -17,11 +18,14 @@ class AccountSettingController extends Controller
         $auth = Auth::user();
         return Inertia::render('AccountSetting', ['auth' => $auth]);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $validate = $request->validate([
+        $validate = Validator::make($request->all(),[
             "name" => ['required'],
         ]);
+        if($request->file('path_profile_photo')->extension()!='jpg'|| $request->file('path_profile_photo')->extension()!='png' || $request->file('path_profile_photo')->extension()!='jpeg'){
+            return Redirect::back()->with(['message' => "Cek lagi inputan anda", "action" => 'error']);
+        }
         $auth = Auth::user();
         $new_photo_path = $request->file('path_profile_photo');
         if ($new_photo_path) {
@@ -34,7 +38,7 @@ class AccountSettingController extends Controller
         }
         $auth->name = $request->name;
         $auth->save();
-        return Redirect::route('dashboard')->with(['message' => "Data berhasil di update", "action" => 'success']);
+        return Redirect::back()->with(['message' => "Data berhasil di update", "action" => 'success']);
     }
 
     public function updatePassword(Request $request)
@@ -43,12 +47,14 @@ class AccountSettingController extends Controller
             "current_password" => ['required'],
             "new_password" => ['required']
         ]);
-
         $auth = Auth::user();
         if(password_verify($request->current_password,$auth->password)){
             $auth->password = password_hash($request->new_password,PASSWORD_DEFAULT);
             $auth->save();
-            return Redirect::route('dashboard')->with(['message' => "Data berhasil di update", "action" => 'success']);
+            return Redirect::back()->with(['message' => "Data berhasil di update", "action" => 'success']);
+        }
+        else {
+            return Redirect::back()->with(['message' => "Cek lagi inputan anda", "action" => 'error']);
         }
 
     }

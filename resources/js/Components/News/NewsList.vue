@@ -5,7 +5,8 @@
             <div v-for="post in posts.data" class="rounded overflow-hidden shadow-lg">
                 <a href="#">
                     <div class="relative">
-                        <img class="w-full" :src="post.cover" alt="Sunset in the mountains">
+                        <!-- <img class="w-full" :src="post.cover" alt="Sunset in the mountains"> -->
+                        <div :style="'background-image:url('+post.cover+');'"  class="bg-cover bg-center w-full h-48"></div>
                         <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
                         <Link :href="'/categories/' + post.category_slug +'/news/' ">
                             <div class="absolute bottom-0 left-0 bg-green-village px-4 py-2 text-white text-sm hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
@@ -54,7 +55,7 @@
 
             </div>
         </div>
-        <SideBarRecentPost :postLatestSideBar="postLatestSideBar" :keyword="keyword"></SideBarRecentPost>
+        <SideBarRecentPost :postLatestSideBar="postLatestSideBar" :keyword="keyword" :tags="tags" :categories="categories"></SideBarRecentPost>
     </div>
 </div>
 </template>
@@ -119,10 +120,12 @@ export default {
     props: {
         posts: Object,
         postLatestSideBar: Object,
-        keyword : String
+        keyword : String,
+        tags : Object,
+        categories : Object
     },
     created() {
-        console.log(this.posts)
+        // console.log(this.posts)
     }
 }
 </script>

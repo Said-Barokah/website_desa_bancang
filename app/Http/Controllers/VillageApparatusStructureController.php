@@ -9,18 +9,21 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\VillageApparatusStructure;
 use App\Models\Villager;
 use App\Models\ApparatusPosition;
+use Illuminate\Support\Facades\Auth;
 class VillageApparatusStructureController extends Controller
 {
     public function index(){
+        $user = Auth::user();
         $village_apparatus_structures = VillageApparatusStructure::with('villager')->with('position')->get();
-        return Inertia::render('VillageApparatusStructureDashboard',['village_apparatus_structures' => $village_apparatus_structures]);
+        return Inertia::render('VillageApparatusStructureDashboard',['village_apparatus_structures' => $village_apparatus_structures,'user' => $user]);
     }
 
     public function create()
     {
+        $user = Auth::user();
         $villagers = Villager::all();
         $apparatus_positions = ApparatusPosition::all();
-        return Inertia::render('VillageApparatusStructureDashboardCreate',['villagers' => $villagers,'apparatus_positions' => $apparatus_positions]);
+        return Inertia::render('VillageApparatusStructureDashboardCreate',['villagers' => $villagers,'apparatus_positions' => $apparatus_positions,'user' => $user]);
     }
 
     /**
@@ -60,6 +63,7 @@ class VillageApparatusStructureController extends Controller
      */
     public function show($id)
     {
+        $user = Auth::user();
         $apparatus_position = VillageApparatusStructure::findOrFail($id);
         return Inertia::render('VillageApparatusStructureDashboardEdit',[
             'apparatus_position' => $apparatus_position,
@@ -76,6 +80,7 @@ class VillageApparatusStructureController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $village_apparatus_structure = VillageApparatusStructure::findOrFail($id);
         $villagers = Villager::all();
         $apparatus_positions = ApparatusPosition::all();
@@ -83,7 +88,8 @@ class VillageApparatusStructureController extends Controller
             'village_apparatus_structure' => $village_apparatus_structure,
             'action' => 'edit',
             'villagers' => $villagers,
-            'apparatus_positions' => $apparatus_positions
+            'apparatus_positions' => $apparatus_positions,
+            'user' => $user
         ]);
     }
 

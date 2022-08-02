@@ -1,7 +1,7 @@
 <template>
-<Navbar :user="user"></Navbar>
-<Header></Header>
-<NewsList :posts="posts" :postLatestSideBar="postLatestSideBar" :keyword="keyword"></NewsList>
+<Navbar :user="user" :role="role"></Navbar>
+<Header :action="action" :slug="slug" categorySlug="" :postCover="posts.data[0].cover"></Header>
+<NewsList :posts="posts" :postLatestSideBar="postLatestSideBar" :keyword="keyword" :tags="tags" :categories="categories"></NewsList>
 <Footer></Footer>
 </template>
 
@@ -19,10 +19,16 @@ export default {
     },
 
     props : {
+        role : String,
         posts : Object,
         postLatestSideBar : Object,
         keyword : String,
-        user : Object
+        user : Object,
+        tags : Object,
+        action : String,
+        slug : String,
+        categories: Object,
+
     },
 
 }

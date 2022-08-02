@@ -1,6 +1,6 @@
 <template>
 <!-- Component Code -->
-<section class="xl:py-28 px-5 sm:p-10 md:p-16">
+<section class="xl:py-28 px-5 sm:p-10 md:p-16 pt-24">
     <div class="flex justify-center mb-16">
         <div>
             <h2 class="font-bold text-4xl text-center text-zinc-600 mb-5">Berita Terkini</h2>
@@ -31,13 +31,13 @@
                     <span class="ml-1 text-zinc-500 text-green-village">activewear</span>
                 </a>
             </div>
-            <hr />
+            <hr/>
 
         </div>
     </div>
     <!-- Component Code -->
     <div class="max-w-screen-xl mx-auto px-5 sm:px-10 md:px-16">
-        <div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10">
+        <div class="grid grid-cols-1 xl:grid-cols-3 sm:grid-cols-2 gap-10">
             <div class="rounded overflow-hidden shadow-lg">
                 <a href="#">
                     <div class="relative">

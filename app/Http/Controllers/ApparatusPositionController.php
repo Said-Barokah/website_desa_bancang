@@ -4,18 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ApparatusPosition;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 class ApparatusPositionController extends Controller
 {
+
     public function index(){
+        $user = Auth::user();
         $apparatus_positions = ApparatusPosition::all();
-        return Inertia::render('ApparatusPositionDashboard',['apparatus_positions' => $apparatus_positions]);
+        return Inertia::render('ApparatusPositionDashboard',['apparatus_positions' => $apparatus_positions,'user' => $user]);
     }
 
     public function create()
     {
-        return Inertia::render('ApparatusPositionDashboardCreate');
+        $user = Auth::user();
+        return Inertia::render('ApparatusPositionDashboardCreate',['user' => $user]);
     }
 
     /**
@@ -26,6 +30,7 @@ class ApparatusPositionController extends Controller
      */
     public function store(Request $request)
     {
+
         $validate = $request->validate([
             "position" => ['required','unique:apparatus_positions'],
         ]);
@@ -43,10 +48,12 @@ class ApparatusPositionController extends Controller
      */
     public function show($id)
     {
+        $user = Auth::user();
         $apparatus_position = ApparatusPosition::findOrFail($id);
         return Inertia::render('ApparatusPositionDashboardEdit',[
             'apparatus_position' => $apparatus_position,
-            'action' => 'show'
+            'action' => 'show',
+            'user' => $user
     ]);
     }
 
@@ -58,10 +65,12 @@ class ApparatusPositionController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $apparatus_position = ApparatusPosition::findOrFail($id);
         return Inertia::render('ApparatusPositionDashboardEdit',[
             'apparatus_position' => $apparatus_position,
-            'action' => 'edit'
+            'action' => 'edit',
+            'user' => $user
         ]);
     }
 

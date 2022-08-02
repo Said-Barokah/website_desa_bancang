@@ -7,16 +7,19 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 class VillagerController extends Controller
 {
     public function index(){
+        $user = Auth::user();
         $villagers = Villager::all();
-        return Inertia::render('VillagerDashboard',['villagers' => $villagers]);
+        return Inertia::render('VillagerDashboard',['villagers' => $villagers, 'user' => $user]);
     }
 
     public function create()
     {
-        return Inertia::render('VillagerDashboardCreate');
+        $user = Auth::user();
+        return Inertia::render('VillagerDashboardCreate',['user' => $user]);
     }
 
     /**
@@ -49,7 +52,7 @@ class VillagerController extends Controller
         $villager = Villager::findOrFail($id);
         return Inertia::render('VillagerDashboardEdit',[
             'villager' => $villager,
-            'action' => 'show'
+            'action' => 'show',
     ]);
     }
 
@@ -61,10 +64,13 @@ class VillagerController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $villager = Villager::findOrFail($id);
         return Inertia::render('VillagerDashboardEdit',[
             'villager' => $villager,
-            'action' => 'edit'
+            'action' => 'edit',
+            'user' => $user
+
         ]);
     }
 

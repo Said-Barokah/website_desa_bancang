@@ -6,17 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\ManagementPosition;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-
+use Illuminate\Support\Facades\Auth;
 class ManagementPositionController extends Controller
 {
     public function index(){
+        $user = Auth::user();
         $management_positions = ManagementPosition::all();
-        return Inertia::render('ManagementPositionDashboard',['management_positions' => $management_positions]);
+        return Inertia::render('ManagementPositionDashboard',['management_positions' => $management_positions,'user' => $user]);
     }
 
     public function create()
     {
-        return Inertia::render('ManagementPositionDashboardCreate');
+        $user = Auth::user();
+        return Inertia::render('ManagementPositionDashboardCreate',['user' => $user]);
     }
 
     /**
@@ -44,10 +46,12 @@ class ManagementPositionController extends Controller
      */
     public function show($id)
     {
+        $user = Auth::user();
         $management_position = ManagementPosition::findOrFail($id);
         return Inertia::render('ManagementPositionDashboardEdit',[
             'management_position' => $management_position,
-            'action' => 'show'
+            'action' => 'show',
+            'user' => $user
     ]);
     }
 
@@ -59,10 +63,12 @@ class ManagementPositionController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $management_position = ManagementPosition::findOrFail($id);
         return Inertia::render('ManagementPositionDashboardEdit',[
             'management_position' => $management_position,
-            'action' => 'edit'
+            'action' => 'edit',
+            'user' => $user
         ]);
     }
 

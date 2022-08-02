@@ -7,6 +7,7 @@ use App\Models\Tag;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 class TagController extends Controller
 {
     /**
@@ -16,8 +17,9 @@ class TagController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $tags = Tag::all();
-        return Inertia('TagDashboard',['tags' => $tags]);
+        return Inertia('TagDashboard',['tags' => $tags,'user' => $user]);
     }
 
     /**
@@ -27,7 +29,8 @@ class TagController extends Controller
      */
     public function create()
     {
-        return Inertia::render('TagDashboardCreate');
+        $user = Auth::user();
+        return Inertia::render('TagDashboardCreate',['user' => $user]);
     }
 
     /**
@@ -61,10 +64,11 @@ class TagController extends Controller
      */
     public function show($id)
     {
+
         $tag = Tag::findOrFail($id);
         return Inertia::render('TagDashboardEdit',[
             'tag' => $tag,
-            'action' => 'show'
+            'action' => 'show',
     ]);
     }
 
@@ -76,10 +80,12 @@ class TagController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $tag = Tag::findOrFail($id);
         return Inertia::render('TagDashboardEdit',[
             'tag' => $tag,
-            'action' => 'edit'
+            'action' => 'edit',
+            'user' => $user
         ]);
     }
 
@@ -98,6 +104,8 @@ class TagController extends Controller
             "keywords" => ['required'],
             "meta_desc" => ['required']
         ]);
+
+
         $tag = Tag::findOrFail($id);
         $tag->name = $request->name;
         $tag->slug = Str::slug($request->slug);

@@ -1,6 +1,6 @@
 <template>
 <!-- Navbar -->
-<Navbar></Navbar>
+<Navbar :user="user"></Navbar>
 <!-- Side Bar -->
 <div class="">
     <SideBar></SideBar>
@@ -26,7 +26,8 @@ export default {
     },
     props : {
         title : String,
-        page : String
+        page : String,
+        user :Object,
     }
 
 }

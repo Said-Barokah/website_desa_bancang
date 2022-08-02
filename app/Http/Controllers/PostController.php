@@ -21,9 +21,9 @@ class PostController extends Controller
      */
     public function index()
     {
-
+        $user = Auth::user();
         $posts = Post::all();
-        return Inertia::render('PostDashboard',['posts' => $posts]);
+        return Inertia::render('PostDashboard',['posts' => $posts,'user' => $user]);
         // return view('posts.index', ['posts' => $posts]);
     }
 
@@ -34,11 +34,13 @@ class PostController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
         $categories = Category::all();
         $tags       = Tag::all();
         return Inertia::render('PostDashboardCreate',[
             "categories" => $categories,
-            "tags" => $tags
+            "tags" => $tags,
+            'user' => $user
         ]);
         // return view('posts.create', compact('categories','tags'));
     }
@@ -55,7 +57,7 @@ class PostController extends Controller
 
         $validator = Validator::make($request->all(), [
             "title"     => "required|unique:posts,title",
-            "cover"     => "required",
+            "cover"     => "required|mimes:png,jpg,jpeg",
             "desc"      => "required",
             "category"  => "required",
             "tags"      => "array|required",
@@ -109,6 +111,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $post = Post::findOrFail($id);
         $categories = Category::all();
         $tags = Tag::all();
@@ -116,7 +119,8 @@ class PostController extends Controller
             'post' => $post,
             'categories' => $categories,
             'tags' => $tags,
-            'post_tag' => $post->tags
+            'post_tag' => $post->tags,
+            'user' => $user
         ]);
     }
 
@@ -132,7 +136,7 @@ class PostController extends Controller
 
         $validator = Validator::make($request->all(), [
             "title"     => "required|unique:posts,title,".$id,
-            "cover"     => "required",
+            "cover"     => "required|mimes:png,jpg,jpeg",
             "desc"      => "required",
             "category"  => "required",
             "tags"      => "array|required",

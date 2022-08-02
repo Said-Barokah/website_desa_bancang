@@ -1,29 +1,27 @@
 <template>
 <Navbar :user="user"></Navbar>
-<Header :title="post[0].title"></Header>
-<div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 flex justify-center">
+<Header :title="post[0].title" :category="post[0].category_name" :action="action" :categorySlug="post[0].category_slug" :postSlug="post[0].slug" :postCover="post[0].cover"></Header>
+<div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 md:px-0 flex justify-center">
     <div class="grid md:grid-cols-8 grid-cols-1 gap-10">
         <div class="grid grid-cols-1 gap-10 col-span-5 prose">
             <!-- place-to-write  -->
             <div class="w-full col-span-5">
-                <div class="flex justify-start text-base">
+                <div class="flex justify-start text-xl mb-5">
                     <span class="flex justify-start mr-4">
-                        <RemixIcon :icon="'time-fill'" style="width:16px; fill:#6f8744;"></RemixIcon>
+                        <RemixIcon :icon="'time-fill'" style="width:20px; fill:#6f8744;"></RemixIcon>
                         <p class="ml-2 mt-0 mb-0">{{ moment(post.created_at).format("LL")}}</p>
                     </span>
-                    <span class="flex justify-start text-base">
-                        <RemixIcon :icon="'user-fill'" style="width:13px; fill:#6f8744;"></RemixIcon>
+                    <span class="flex justify-start">
+                        <RemixIcon :icon="'user-fill'" style="width:20px; fill:#6f8744;"></RemixIcon>
                         <p class="ml-2 mt-0 mb-0"> {{ post[0].writer }} </p>
                     </span>
                 </div>
-                <img :src="post[0].cover" alt="" class="w-full mt-4 mb-0">
+                <div :style="'background-image:url('+post[0].cover+');'"  class="bg-cover bg-center w-full h-96 max-h-96"></div>
             </div>
-
-            <div class="col-span-5 leading-6 text-zinc-600 text-base">
-                {{ post[0].desc }}
+            <div class="col-span-5 leading-6 text-zinc-600 text-base prose prose-p:text-base" v-bind:innerHTML="post[0].desc">
             </div>
         </div>
-        <SideBarRecentPost :postLatestSideBar="postLatestSideBar"></SideBarRecentPost>
+        <SideBarRecentPost :postLatestSideBar="postLatestSideBar" :categories="categories" :tags="tags"></SideBarRecentPost>
     </div>
 </div>
 <Footer></Footer>
@@ -54,6 +52,10 @@ export default {
         user: Object,
         post: Object,
         postLatestSideBar: Object,
+        categories : Object,
+        tags : Object,
+        action : String
+
     }
 }
 </script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 // import the Avatar class
 use App\Models\Post;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 

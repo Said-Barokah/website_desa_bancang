@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 class CategoryController extends Controller
 {
     /**
@@ -17,8 +18,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $categories = Category::all();
-        return Inertia('CategoryDashboard',['categories' => $categories]);
+        return Inertia('CategoryDashboard',['categories' => $categories,'user' => $user]);
     }
 
     /**
@@ -28,7 +30,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CategoryDashboardCreate');
+        $user = Auth::user();
+        return Inertia::render('CategoryDashboardCreate',['user' => $user]);
     }
 
     /**
@@ -77,10 +80,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $category = Category::findOrFail($id);
         return Inertia::render('CategoryDashboardEdit',[
             'category' => $category,
-            'action' => 'edit'
+            'action' => 'edit',
+            'user' => $user
         ]);
     }
 

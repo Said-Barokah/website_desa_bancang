@@ -9,18 +9,21 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 class BPDStructureController extends Controller
 {
     public function index(){
+        $user = Auth::user();
         $b_p_d_structures = BPDStructure::with('villager')->with('position')->get();
-        return Inertia::render('BPDStructureDashboard',['b_p_d_structures' => $b_p_d_structures]);
+        return Inertia::render('BPDStructureDashboard',['b_p_d_structures' => $b_p_d_structures,'user' => $user]);
     }
 
     public function create()
     {
+        $user = Auth::user();
         $villagers = Villager::all();
         $manager_positions = ManagementPosition::all();
-        return Inertia::render('BPDStructureDashboardCreate',['villagers' => $villagers,'manager_positions' => $manager_positions]);
+        return Inertia::render('BPDStructureDashboardCreate',['villagers' => $villagers,'manager_positions' => $manager_positions,'user' => $user]);
     }
 
     /**
@@ -76,6 +79,7 @@ class BPDStructureController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $b_p_d_structure = BPDStructure::findOrFail($id);
         $villagers = Villager::all();
         $manager_positions = ManagementPosition::all();
@@ -83,7 +87,8 @@ class BPDStructureController extends Controller
             'b_p_d_structure' => $b_p_d_structure,
             'action' => 'edit',
             'villagers' => $villagers,
-            'manager_positions' => $manager_positions
+            'manager_positions' => $manager_positions,
+            'user' => $user
         ]);
     }
 
