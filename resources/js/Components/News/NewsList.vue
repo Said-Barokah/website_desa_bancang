@@ -1,17 +1,17 @@
 <template>
 <div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16">
-    <div class="grid md:grid-cols-8 grid-cols-1 gap-10">
-        <div class="col-span-5 grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2 gap-10">
-            <div v-for="post in posts.data" class="rounded overflow-hidden shadow-lg">
+    <div class="grid md:grid-cols-8 grid-cols-1 gap-10 ">
+        <div class="col-span-5 sm:grid md:grid-cols-2 sm:gap-10 gap-0">
+            <div v-show="isHiddenNotFound" v-for="post in posts.data" class="rounded overflow-hidden shadow-lg max-h-max sm:mb-0 mb-4">
                 <a href="#">
                     <div class="relative">
                         <!-- <img class="w-full" :src="post.cover" alt="Sunset in the mountains"> -->
-                        <div :style="'background-image:url('+post.cover+');'"  class="bg-cover bg-center w-full h-48"></div>
+                        <div :style="'background-image:url('+post.cover+');'" class="bg-cover bg-center w-full h-48"></div>
                         <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
                         <Link :href="'/categories/' + post.category_slug +'/news/' ">
-                            <div class="absolute bottom-0 left-0 bg-green-village px-4 py-2 text-white text-sm hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                                {{ post.category_name }}
-                            </div>
+                        <div class="absolute bottom-0 left-0 bg-green-village px-4 py-2 text-white text-sm hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                            {{ post.category_name }}
+                        </div>
                         </Link>
                         <a href="!#">
                             <div class="text-sm absolute top-0 right-0 bg-green-village px-4 text-white rounded-full h-16 w-16 flex flex-col items-center justify-center mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
@@ -35,17 +35,17 @@
                 </div>
             </div>
             <!-- Pagination -->
-            <div class="col-span-2">
+            <div v-show="isHiddenNotFound" class="col-span-2 mt-4">
                 <div class="flex justify-end">
 
-                    <Link v-show="posts.prev_page_url" :href='posts.prev_page_url' class="inline-flex items-center py-2 px-4 mr-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <Link v-show="posts.prev_page_url" :href='keyword==null ? posts.prev_page_url : posts.prev_page_url+"&keyword="+keyword' class="inline-flex items-center py-2 px-4 mr-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                     <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                     </svg>
                     Previous
                     </Link>
 
-                    <Link :href='posts.next_page_url' class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <Link v-show="posts.next_page_url!=null" :href='keyword==null ? posts.next_page_url : posts.next_page_url+"&keyword="+keyword' class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                     Next
                     <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -54,7 +54,14 @@
                 </div>
 
             </div>
+            <div v-show="!isHiddenNotFound" class="flex justify-center col-span-2 pt-14">
+                <div class="w-full">
+                    <div class="w-full h-72 bg-center bg-contain bg-no-repeat mb-4" style="background-image: url(/storage/images/imageNotFound/image-not-found.webp);"></div>
+                    <h1 class="text-4xl font-bold text-zinc-500 text-center">Berita Tidak ditemukan</h1>
+                </div>
+            </div>
         </div>
+
         <SideBarRecentPost :postLatestSideBar="postLatestSideBar" :keyword="keyword" :tags="tags" :categories="categories"></SideBarRecentPost>
     </div>
 </div>
@@ -114,18 +121,21 @@ export default {
     data() {
         return {
             url: '<!-- Credit: Componentity.com -->',
-            moment: moment
+            moment: moment,
+            isHiddenNotFound: true
         }
     },
     props: {
         posts: Object,
         postLatestSideBar: Object,
-        keyword : String,
-        tags : Object,
-        categories : Object
+        keyword: String,
+        tags: Object,
+        categories: Object,
     },
     created() {
-        // console.log(this.posts)
+        if (Object.keys(this.posts.data).length == 0) {
+            this.isHiddenNotFound = false
+        }
     }
 }
 </script>

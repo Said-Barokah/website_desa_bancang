@@ -3,11 +3,11 @@
 <Navbar :user="user"></Navbar>
 <!-- Side Bar -->
 <div class="">
-    <SideBar></SideBar>
+    <SideBar :user="user"></SideBar>
     <!-- Contain -->
-    <section class="flex justify-center w-full">
-        <div class="w-full ml-64 px-16 py-10">
-            <div class="w-full flex">
+    <section class="flex justify-center w-full min-h-screen bg-[#ebeef2]">
+        <div class="w-full ml-64 px-16 py-14">
+            <div class="w-full flex mt-[52px]">
                 <!-- <Category v-if = 'page == "Category" '></Category> -->
                 <slot />
             </div>

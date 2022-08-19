@@ -1,5 +1,5 @@
 <template>
-<div class="col-span-3">
+<div class="md:col-span-3 col-span-5">
     <form class="mb-3" @submit.prevent="submit">
         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
         <div class="relative contain-form">
@@ -8,7 +8,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
             </div>
-            <input type="search" v-model="form.keyword" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300" placeholder="Search Mockups, Logos..." required="">
+            <input type="search" v-model="form.keyword" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300" placeholder="Cari berita terkini ....." required="">
             <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-green-village font-medium rounded-lg text-sm px-4 py-2 ">Cari</button>
         </div>
     </form>
@@ -35,8 +35,14 @@
     </div>
     <div class="flex flex-col">
         <div class="text-green-village-1 text-3xl font-semibold mb-3">Tag</div>
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap relative " :class="!isHiddenTag ? 'max-h-max overflow-visible' : 'max-h-[109px] overflow-hidden'">
             <Link as="button" :href="'/tags-news/'+tag.slug" v-for="tag in tags" class="font-bold text-white  bg-lime-700 py-1 px-3 text-green-village hover:bg-white hover:border hover:border-lime-500 rounded-md m-1">{{ tag.name }}</Link>
+            <Link as="button" :href="'/tags-news/'+tag.slug" v-for="tag in tags" class="font-bold text-white  bg-lime-700 py-1 px-3 text-green-village hover:bg-white hover:border hover:border-lime-500 rounded-md m-1">{{ tag.name }}</Link>
+            <div class="bg-gradient-to-t from-white  w-full absolute bottom-0 h-[67px]" v-show="isHiddenTag">
+            </div>
+            <div class="w-full flex justify-center absolute bottom-[-4px] cursor-pointer" @click="isHiddenTag=!isHiddenTag" :class="{'bottom-[-39px]' : !isHiddenTag}">
+                <RemixIcon :icon="'arrow-down-s-line'" class="h-[3.25rem] fill-gray-500" :class="{ 'rotate-180 transition' : !isHiddenTag}"></RemixIcon>
+            </div>
 
         </div>
     </div>
@@ -88,7 +94,8 @@ export default {
             form: {
                 keyword: this.keyword
             },
-            isHiddenCategory: true
+            isHiddenCategory: true,
+            isHiddenTag: true
         }
     },
     props: {

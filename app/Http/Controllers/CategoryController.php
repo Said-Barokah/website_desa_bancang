@@ -43,8 +43,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            "name" => ['required', 'unique:categories'],
-            "slug" => ['required', 'unique:categories'],
+            "name" => ['required', 'unique:categories,name'],
+            "slug" => ['required', 'unique:categories,slug'],
             "keywords" => ['required'],
             "meta_desc" => ['required']
         ]);
@@ -99,8 +99,8 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $validate = $request->validate([
-            "name" => ['required'],
-            "slug" => ['required'],
+            "name" => ['required','unique:categories,name,'.$id],
+            "slug" => ['required','unique:categories,slug,'.$id],
             "keywords" => ['required'],
             "meta_desc" => ['required']
         ]);

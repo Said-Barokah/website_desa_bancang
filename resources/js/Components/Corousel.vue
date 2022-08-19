@@ -6,8 +6,8 @@
             <div class="w-full h-full flex justify-start items-center md:pt-0 pt-32">
                 <div class="z-50 md:ml-12 ml-none md:mx-none mx-7 flex flex-col">
                     <h1 class="font-bold md:text-6xl xl:text-zinc-500 xl:w-1/2 w-full text-3xl text-white h-min md:mb-9 mb-4">Selamat Datang di Website Desa Bancang</h1>
-                    <h5 class="xl:text-zinc-600 text-white xl:w-1/2 w-full text-lg md:text-xl h-min md:mb-9 mb-4">Website desa Bancang dibangun bertujuan sebagai sarana untuk menyampaikan informasi terbaru dan menarik mengenai desa bancang. Website ini dibangun oleh kelompok KKNT 112 Universitas Trunojoyo Madura tahun 2022</h5>
-                    <Link href="" class="link-button-1 rounded-full text-base p-4 md:text-xl md:p-4  bg-zinc-700 text-white w-max md:shadow-none shadow">Baca Selengkapnya</Link>
+                    <h5 class="xl:text-zinc-600 text-white xl:w-1/2 w-full text-lg md:text-xl h-min md:mb-9 mb-4">Website resmi Desa Bancang dibangun bertujuan sebagai sarana untuk menyampaikan informasi terbaru dan menarik mengenai desa bancang. Website ini dibangun oleh kelompok KKNT 112 Universitas Trunojoyo Madura tahun 2022</h5>
+                    <Link :href="'news/?keyword=pembuatan%20website%20resmi%20desa%20bancang'" class="link-button-1 rounded-full text-base p-4 md:text-xl md:p-4  bg-zinc-700 text-white w-max md:shadow-none shadow">Baca Selengkapnya</Link>
                 </div>
             </div>
         </div>

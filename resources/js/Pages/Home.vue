@@ -1,9 +1,9 @@
 <template>
-<Navbar :role="role" :user="user"></Navbar>
+<Navbar :role="role" :user="user" ></Navbar>
 <Corousel></Corousel>
 <FeatureAboutUs></FeatureAboutUs>
-<FeatureGovernmentCard></FeatureGovernmentCard>
-<LatestBlogPost></LatestBlogPost>
+<FeatureGovernmentCard :fromYear="fromYear" :toYear="toYear" :kepalaDesa="kepalaDesa" :sekretarisDesa="sekretarisDesa"></FeatureGovernmentCard>
+<LatestBlogPost :postLatest="postLatest"></LatestBlogPost>
 <Footer></Footer>
 </template>
 
@@ -27,7 +27,12 @@ export default {
     },
     props : {
         role : String,
-        user : Object
+        user : Object,
+        fromYear : Number,
+        toYear : Number,
+        kepalaDesa : Object,
+        sekretarisDesa : Object,
+        postLatest : Object
     }
 }
 </script>

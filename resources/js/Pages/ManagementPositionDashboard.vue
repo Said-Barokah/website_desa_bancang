@@ -5,7 +5,7 @@
         <!-- Notofikasi -->
         <alert-danger v-show="$page.props.flash.action=='delete'" :message="$page.props.flash.message"></alert-danger>
         <alert-success v-show="$page.props.flash.action=='success'" :message="$page.props.flash.message"></alert-success>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
+        <div class="overflow-x-auto shadow-md sm:rounded-lg w-full">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -14,6 +14,9 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Jenis Posisi Pengurus BPD
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            action
                         </th>
                     </tr>
                 </thead>

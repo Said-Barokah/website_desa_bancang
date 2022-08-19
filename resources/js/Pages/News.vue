@@ -1,6 +1,6 @@
 <template>
 <Navbar :user="user" :role="role"></Navbar>
-<Header :action="action" :slug="slug" categorySlug="" :postCover="posts.data[0].cover"></Header>
+<Header :action="action" :slug="slug" categorySlug="" :postCover="postCover"></Header>
 <NewsList :posts="posts" :postLatestSideBar="postLatestSideBar" :keyword="keyword" :tags="tags" :categories="categories"></NewsList>
 <Footer></Footer>
 </template>
@@ -17,7 +17,11 @@ export default {
         NewsList,
         Footer
     },
-
+    data(){
+        return {
+            postCover : null
+        }
+    },
     props : {
         role : String,
         posts : Object,
@@ -28,8 +32,12 @@ export default {
         action : String,
         slug : String,
         categories: Object,
-
     },
+    created() {
+         if(Object.keys(this.posts.data).length != 0){
+            this.postCover = this.posts.data[0].cover
+         }
+    }
 
 }
 </script>

@@ -1,17 +1,13 @@
 <template>
-<nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 top-0 sticky z-50 ">
-    <div class="container flex flex-wrap justify-between items-center mx-auto">
-        <Link :href="route('home')" class="flex items-center">
-            <img src="/storage/images/logo/rect59901.png" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
-            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Desa Bancang - KKNT 112 UTM 2022</span>
-        </Link>
+<nav class="bg-white z-[50] border-gray-200 px-2 sm:px-4 py-6 rounded dark:bg-gray-800 fixed top-0 left-0 w-full ">
+    <div class="container flex flex-wrap justify-end items-center mx-auto">
         <div class="lg:flex hidden items-center md:order-2 relative ">
-            <button @click="isHiddenProfileMenu = !isHiddenProfileMenu" type="button" class="photo-user flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+            <button @click="isHiddenProfileMenu = !isHiddenProfileMenu" type="button" class="relative photo-user flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
                 <RemixIcon v-show="user.path_profile_photo==null" :icon="'user-fill'" :class="'rounded-full bg-gray-500 w-8 h-8 fill-white p-1'"></RemixIcon>
                 <div v-show="user.path_profile_photo!=null" class="w-8 h-8 rounded-full bg-gray-500 bg-cover bg-center" :style="'background-image: url('+ user.path_profile_photo +');'"></div>
             </button>
 
-            <div v-show="!isHiddenProfileMenu" class="z-50 absolute top-4 right-0 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+            <div v-show="!isHiddenProfileMenu" class="z-50 absolute  min-w-max bg-white right-0 my-4 text-base list-none top-[23px] left-auto rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                 <div class="py-3 px-4">
                     <span class="block text-sm text-gray-900 dark:text-white"> {{ user.name }} </span>
                     <span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{{ user.email }}</span>
@@ -39,10 +35,12 @@
 import {
     Link
 } from '@inertiajs/inertia-vue3';
+import RemixIcon from '../RemixIcons.vue';
 
 export default {
     components: {
-        Link
+        Link,
+        RemixIcon
     },
     props: {
         page: String,
@@ -55,7 +53,7 @@ export default {
     },
     methods: {
         logout() {
-            this.$inertia.post('logout')
+            this.$inertia.post(route('logout'));
         },
     }
 }

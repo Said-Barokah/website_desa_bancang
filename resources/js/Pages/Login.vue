@@ -1,13 +1,12 @@
 <template>
-<div class="flex justify-center items-center h-screen">
-    <div class="w-1/2 flex justify-center items-center">
+<div class="flex justify-center md:flex-row flex-col items-center h-screen">
+    <div>
+        <Link :href="route('home')" class="py-[12px] px-[20px] w-max border-gray-600 border-[1.5px] border-solid absolute left-0 top-0 mt-5 ml-5 md:px-20 font-bold rounded-full self-start  text-zinc-400 ring-slate-400 focus:ring-4 focus:outline-none focus:ring-blue-300 text-sm sm:w-auto md:py-2.5 text-center">Beranda</Link>
+    </div>
+    <div class="w-[64%] md:w-1/2 md:flex justify-center items-center md:mt-0 mt-[78px]">
         <img src="storage/images/login/2845445.webp" alt="" width="550">
     </div>
-    <form @submit.prevent="form.post('/login')" class="w-1/2">
-        <div>
-            <Link :href="route('home')" class="button-back absolute left-0 top-0 mt-5 ml-5 px-20 font-bold rounded-full self-start  text-zinc-400 ring-slate-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Back</Link>
-            <Link :href="route('register')" class="button-register absolute right-0 mt-5 mr-5 top-0 px-20 font-bold rounded-full self-start  text-zinc-400 ring-slate-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Daftar</Link>
-        </div>
+    <form @submit.prevent="form.post('/login')" class="w-full md:w-1/2">
         <div class="flex justify-center items-center flex-col">
             <div v-if="errors.email" class="w-full px-20">
                 <h1 class="bg-red-400 w-full rounded-lg text-red-700 py-3 text-center">{{ errors.email }}</h1>
@@ -17,37 +16,27 @@
             </div>
             <div class="font-bold text-zinc-500 text-4xl">
                 <h3>Login</h3>
+
             </div>
-            <div class="mb-6 w-full px-20">
-                <label for="email" class="block mb-2 text-sm font-medium text-zinc-500 font-bold dark:text-gray-300">Email</label>
-                <input type="email" v-model="form.email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required>
+            <div class="mb-6 w-full md:px-20 px-7">
+                <label for="email" class="block mb-2 text-sm font-medium text-zinc-500 dark:text-gray-300">Email</label>
+                <input type="email" v-model="form.email" id="email" class="focus:border-[#99ad25] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required>
             </div>
-            <div class="mb-6 w-full px-20 ">
-                <label for="password" class="block mb-2 text-sm font-medium text-zinc-500 font-bold dark:text-gray-300">Password</label>
+            <div class="mb-6 w-full md:px-20 px-7 flex flex-col mt-[10px]">
+                <label for="password" class="block mb-2 text-sm font-medium text-zinc-500 dark:text-gray-300">Password</label>
                 <input type="password" v-model="form.password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <Link :href="route('password.request')" class="self-end text-blue-600 mt-[10px]">Lupa password ?</Link>
             </div>
-            <button type="submit" class="button-login px-20 font-bold rounded-full self-start ml-20 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Login</button>
+            <div class="flex justify-center md:flex-row flex-col">
+                <button type="submit" class="bg-gradient-to-r md:mx-[10px] from-[#99ad25] to-[#909d45] hover:from-[#909d45] hover:to-[#99ad25] px-20 font-bold rounded-full self-start text-white focus:ring-4 focus:outline-none focus:ring-blue-300 text-sm w-full sm:w-auto  py-2.5 text-center">Login</button>
+                <span class="md:hidden block text-center my-3 text-zinc-500">atau</span>
+                <Link :href="route('register')" class="hover:bg-gradient-to-r md:mx-[10px] hover:from-[#a36c1b] hover:to-[#feaa2b] hover:border-none hover:py-2.5 bg-none border-4 border-[#a36c1b] text-[#a36c1b] py-[6px] px-20 font-bold rounded-full self-start hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 text-sm w-full sm:w-auto text-center ">Daftar</Link>
+            </div>
+
         </div>
     </form>
 </div>
 </template>
-
-<style scoped>
-.button-login {
-    background-image: linear-gradient(45deg, #99ad25, #909d45);
-}
-
-.button-back, .button-register {
-    border: 1.5px gray solid;
-}
-.button-login:hover {
-    background-image: linear-gradient(45deg, #909d45, #99ad25);
-}
-
-input:focus {
-    border-color: #99ad25;
-}
-</style>
 
 <script>
 import {
@@ -57,13 +46,14 @@ import {
     Link
 } from '@inertiajs/inertia-vue3';
 
+
 export default {
     components: {
         Link
     },
     props: {
         errors: Object,
-        success : String,
+        success: String,
     },
     data() {
         return {
@@ -75,7 +65,6 @@ export default {
             email: null,
             password: null
         })
-
 
         form.setError({
             foo: 'Your error message for the foo field.',

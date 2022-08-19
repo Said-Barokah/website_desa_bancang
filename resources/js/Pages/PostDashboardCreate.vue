@@ -2,17 +2,16 @@
 <AdminLayout :user="user">
     <div class="w-full">
         <Link :href="route('posts.index')" as="button" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-5">Back</Link>
-        <div v-show="!isHiddenAlert" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
-            <RemixIcon  :icon="'error-warning-fill'" :class="'fill-red-700 w-5'"></RemixIcon>
+        <div v-show="$page.props.errors.cover" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+            <RemixIcon :icon="'error-warning-fill'" :class="'fill-red-700 w-5'"></RemixIcon>
             <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
                 {{ $page.props.errors.cover }}
             </div>
-            <RemixIcon @click="isHiddenAlert = true" :icon="'close-fill'" :class="'ml-auto -mx-1.5 -my-1.5 bg-red-100 fill-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 '"></RemixIcon>
         </div>
         <form class="w-full" method="post" @submit.prevent="submit">
             <div class="relative z-0 w-full mb-6 group">
                 <label for="File">Upload Gambar Cover</label>
-                <input required type="file" @change="previewImage" ref="photo" class="
+                <input  type="file" @change="previewImage" ref="photo" class="
                                         w-full
                                         px-4
                                         py-2
@@ -28,28 +27,65 @@
                     {{ errors.image }}
                 </div> -->
             </div>
-            <div class="relative z-0 w-full mb-6 group">
-                <input required v-model="form.title" type="text" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
-                <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nama</label>
+            <div v-show="$page.props.errors.title" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+                <RemixIcon :icon="'error-warning-fill'" :class="'fill-red-700 w-5'"></RemixIcon>
+                <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
+                    {{ $page.props.errors.title }}
+                </div>
             </div>
             <div class="relative z-0 w-full mb-6 group">
-                <input required v-model="form.slug" type="text" id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
+                <input  v-model="form.title" type="text" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
+                <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nama</label>
+            </div>
+            <div v-show="$page.props.errors.slug" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+                <RemixIcon :icon="'error-warning-fill'" :class="'fill-red-700 w-5'"></RemixIcon>
+                <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
+                    {{ $page.props.errors.slug }}
+                </div>
+            </div>
+            <div class="relative z-0 w-full mb-6 group">
+                <input  v-model="form.slug" type="text" id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
                 <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Slug</label>
+            </div>
+            <div v-show="$page.props.errors.desc" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+                <RemixIcon :icon="'error-warning-fill'" :class="'fill-red-700 w-5'"></RemixIcon>
+                <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
+                    {{ $page.props.errors.desc }}
+                </div>
             </div>
             <div class="relative z-0 w-full mb-6 group">
                 <div class="relative z-0 w-full mb-6 group">
                     <editor-button :editor="editor"></editor-button>
-                    <editor-content :editor="editor" :class="'prose max-w-6xl p-4'" />
+                    <editor-content :editor="editor" class="prose max-w-full prose-stone
+                    prose-table:border-collapse prose-table:border prose-table:border-slate-500
+                    prose-table:table-fixed prose-th:bg-zinc-500 prose-th:border prose-th:border-slate-300
+                    prose-th:px-3 prose-td:px-3 prose-td:border prose-td:border-slate-400  p-4" />
                 </div>
             </div>
-
-            <div class="relative z-0 w-full mb-6 group">
-
-                <textarea v-model="form.meta_desc" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Meta Deskripsi..."></textarea>
+            <div v-show="$page.props.errors.meta_desc" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+                <RemixIcon :icon="'error-warning-fill'" :class="'fill-red-700 w-5'"></RemixIcon>
+                <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
+                    {{ $page.props.errors.meta_desc }}
+                </div>
             </div>
             <div class="relative z-0 w-full mb-6 group">
-                <input required v-model="form.keywords" type="text" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
+                <textarea v-model="form.meta_desc" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Meta Deskripsi..."></textarea>
+            </div>
+            <div v-show="$page.props.errors.keywords" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+                <RemixIcon :icon="'error-warning-fill'" :class="'fill-red-700 w-5'"></RemixIcon>
+                <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
+                    {{ $page.props.errors.keywords }}
+                </div>
+            </div>
+            <div class="relative z-0 w-full mb-6 group">
+                <input  v-model="form.keywords" type="text" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
                 <label for="floating_repeat_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Keywords</label>
+            </div>
+            <div v-show="$page.props.errors.category" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+                <RemixIcon :icon="'error-warning-fill'" :class="'fill-red-700 w-5'"></RemixIcon>
+                <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
+                    {{ $page.props.errors.category }}
+                </div>
             </div>
             <div class="relative z-0 w-full mb-6 group">
                 <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an option</label>
@@ -57,6 +93,12 @@
                     <option selected="">Pilih Kategori</option>
                     <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
                 </select>
+            </div>
+            <div v-show="$page.props.errors.tags" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+                <RemixIcon :icon="'error-warning-fill'" :class="'fill-red-700 w-5'"></RemixIcon>
+                <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
+                    {{ $page.props.errors.tags }}
+                </div>
             </div>
             <div class="relative z-0 w-full mb-6 group">
                 <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Pilih tag</label>
@@ -119,8 +161,8 @@ export default {
                 type: Object,
                 default: null
             },
-            isHiddenAlert : false,
-            errorFirst : String
+            isHiddenAlert: false,
+            errorFirst: String
         }
     },
     setup() {
@@ -148,17 +190,13 @@ export default {
         categories: Object,
         tags: Object,
         user: Object,
-        errors : Object
     },
     methods: {
         submit() {
             if (this.$refs.photo.files[0]) {
                 this.form.cover = this.$refs.photo.files[0];
-                console.log(this.form.cover)
             }
             this.form.desc = this.editor.getHTML()
-            console.log(this.form)
-            console.log(this.form)
             this.$inertia.post(route('posts.store'), this.form)
         },
         previewImage(e) {
@@ -166,14 +204,6 @@ export default {
             this.url = URL.createObjectURL(file);
         },
 
-    },
-    created(){
-        if(Object.keys(this.$props.errors).length !=0){
-            this.isHiddenAlert = false
-        }
-        else {
-            this.isHiddenAlert = true
-        }
     }
 
 }

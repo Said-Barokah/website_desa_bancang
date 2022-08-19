@@ -4,8 +4,8 @@
         <div class="flex md:flex-row flex-col content-between items-center">
             <div class="md:w-3/6  w-4/6 py-40 pr-20 md:inline hidden">
                 <div class="about_us_img">
-                    <div v-show='!isHiddenMap' class="gmap_canvas">
-                        <iframe height="304" id="gmap_canvas" src="https://maps.google.com/maps?q=desa%20bancang&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                    <div v-show='!isHiddenMap' >
+                        <iframe height="560" width="560" id="gmap_canvas" src="https://maps.google.com/maps?q=desa%20bancang&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                     </div>
                     <img v-show='isHiddenMap' class="shadow-2xl" src="storage/images/aboutUs/image866.webp" alt="" data-pagespeed-url-hash="3259222683" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
                 </div>
@@ -14,25 +14,25 @@
                 <div class="about_us_text">
                     <h2 class="text-4xl text-zinc-600">Desa Bancang</h2>
                     <p>Desa Bancang merupakan salah satu desa yang terletak di Kecamatan Tragah Kabubaten Bangkalan. Pekerjaan masyarakat desa disini rata rata merupakan petani. Padi, pohon bambu, atau ketela pisang meruapakan contoh sumber daya alam yang bisa dimanfaatkan di desa ini.</p>
-                    <a class="btn_2 rounded-full" href="#">Baca Selengkapnya</a>
+                    <Link class="btn_2 rounded-full" :href="'/news?keyword=profil%20desa%20bancang'">Baca Selengkapnya</Link>
                     <div class="banner_item md:flex hidden">
                         <div class="single_item">
-                            <Link href="/" class="btn-fiture">
+                            <Link :href="'/news?keyword=sejarah%20desa%20bancang'" class="btn-fiture">
                             <RemixIcon style="width:30px" :icon="'quill-pen-fill'"></RemixIcon>
                             <h5 class="font-bold text-zinc-600">Sejarah</h5>
                             </Link>
 
                         </div>
                         <div class="single_item">
-                            <Link href="/" class="btn-fiture">
+                            <Link :href="'/news?keyword=pemerintahan%20desa%20bancang'"  class="btn-fiture">
                             <RemixIcon style="width:30px" :icon="'government-fill'"></RemixIcon>
                             <h5 class="font-bold text-zinc-600">Pemerintah Desa</h5>
                             </Link>
 
                         </div>
-                        <div class="single_item" @click="isHiddenMap = !isHiddenMap">
-                            <RemixIcon style="width:30px" :icon="'road-map-fill'"></RemixIcon>
-                            <h5 class="font-bold text-zinc-600">Letak Desa</h5>
+                        <div class="single_item cursor-pointer" @click="isHiddenMap = !isHiddenMap">
+                            <RemixIcon style="width:30px" :icon="'road-map-fill'" :style=" {'fill:#6f8744' : isHiddenMap==false} "></RemixIcon>
+                            <h5 class="font-bold text-zinc-600" :style=" {'color:#6f8744' : !isHiddenMap==false}" >Letak Desa</h5>
                         </div>
                     </div>
                 </div>

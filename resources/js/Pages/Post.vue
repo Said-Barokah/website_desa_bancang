@@ -1,12 +1,12 @@
 <template>
-<Navbar :user="user"></Navbar>
+<Navbar :user="user" :role="role"></Navbar>
 <Header :title="post[0].title" :category="post[0].category_name" :action="action" :categorySlug="post[0].category_slug" :postSlug="post[0].slug" :postCover="post[0].cover"></Header>
-<div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 md:px-0 flex justify-center">
+<div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 md:px-10 flex justify-center">
     <div class="grid md:grid-cols-8 grid-cols-1 gap-10">
         <div class="grid grid-cols-1 gap-10 col-span-5 prose">
             <!-- place-to-write  -->
             <div class="w-full col-span-5">
-                <div class="flex justify-start text-xl mb-5">
+                <div class="flex justify-start sm:text-xl text-base mb-5">
                     <span class="flex justify-start mr-4">
                         <RemixIcon :icon="'time-fill'" style="width:20px; fill:#6f8744;"></RemixIcon>
                         <p class="ml-2 mt-0 mb-0">{{ moment(post.created_at).format("LL")}}</p>
@@ -54,7 +54,8 @@ export default {
         postLatestSideBar: Object,
         categories : Object,
         tags : Object,
-        action : String
+        action : String,
+        role : String
 
     }
 }

@@ -1,5 +1,5 @@
 <template>
-<div v-if="editor" class="flex justify-center">
+<div v-if="editor" class="flex justify-center flex-wrap">
     <div title="bold" class="bg-transparent inline-block hover:bg-blue-500 mx-2 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
         <RemixIcon icon="bold" style="height: 20" />
     </div>
@@ -69,11 +69,11 @@
     <div title="undo" class="bg-transparent inline-block hover:bg-blue-500 mx-2 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" @click="editor.chain().focus().undo().run()">
         <RemixIcon icon="arrow-go-back-line" style="height: 20" />
     </div>
-    <div title="redo" class="bg-transparent inline-block hover:bg-blue-500 mx-2 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" @click="editor.chain().focus().redo().run()">
+    <div title="redo" class="mt-4 bg-transparent inline-block hover:bg-blue-500 mx-2 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" @click="editor.chain().focus().redo().run()">
         <RemixIcon icon="arrow-go-forward-line" style="height: 20" />
     </div>
 
-    <div title="tambah tabel" class="cursor-pointer bg-transparent inline-block hover:bg-blue-500 mx-2 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" @click="isHiddenTable = !isHiddenTable">
+    <div title="tambah tabel" class=" mt-4 cursor-pointer bg-transparent inline-block hover:bg-blue-500 mx-2 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" @click="isHiddenTable = !isHiddenTable">
         <RemixIcon icon="table-line" style="height: 20" />
     </div>
 </div>

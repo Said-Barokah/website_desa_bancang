@@ -107,6 +107,7 @@ export default {
         // this.villagers.map(function (villager) {
         //     return villager.data = villager.nik + '-' + villager.name;
         // });
+
     },
 
 }

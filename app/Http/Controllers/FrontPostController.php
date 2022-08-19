@@ -15,7 +15,7 @@ class FrontPostController extends Controller
 {
     public function index(Request $request)
     {
-        $user = 'guard';
+        $user = array();
         $role = 'guard';
         if (Auth::check()) {
             if (Auth::user()->hasRole('admin')) {
@@ -35,7 +35,7 @@ class FrontPostController extends Controller
         $postLatestSideBar = Post::select('posts.cover', 'posts.title', 'posts.created_at', 'posts.slug', 'posts.meta_desc', 'categories.name as category_name', 'categories.id as category_id', 'categories.slug as category_slug')
             ->join('categories', 'posts.category_id', '=', 'categories.id')
             ->latest()->take(5)->get();
-        $tags = Tag::latest()->take(7)->get();
+        $tags = Tag::latest()->get();
 
         $keyword = $request->input('keyword');
         if ($keyword != '') {
@@ -66,8 +66,8 @@ class FrontPostController extends Controller
 
     public function showPostCategory($slug, Request $request)
     {
-        $user = 'guard';
         $role = 'guard';
+        $user = array();
         if (Auth::check()) {
             if (Auth::user()->hasRole('admin')) {
                 $role = 'admin';
@@ -81,7 +81,7 @@ class FrontPostController extends Controller
         $postLatestSideBar = Post::select('posts.cover', 'posts.title', 'posts.created_at', 'posts.slug', 'posts.meta_desc', 'categories.name as category_name', 'categories.id as category_id', 'categories.slug as category_slug')
             ->join('categories', 'posts.category_id', '=', 'categories.id')
             ->latest()->take(5)->get();
-        $posts = Post::select('posts.cover', 'posts.title','posts.slug', 'posts.created_at', 'posts.desc', 'categories.name as category_name', 'categories.slug as category_slug')
+        $posts = Post::select('posts.cover', 'posts.title', 'posts.slug', 'posts.created_at', 'posts.desc', 'categories.name as category_name', 'categories.slug as category_slug')
             ->join('categories', 'posts.category_id', '=', 'categories.id')
             ->where('categories.slug', '=', $slug)
             ->latest()
@@ -98,7 +98,7 @@ class FrontPostController extends Controller
                 ->latest()
                 ->simplePaginate(16);
         }
-        $tags = Tag::latest()->take(7)->get();
+        $tags = Tag::latest()->get();
         $categories = Category::latest()->get();
         // return dd($posts);
         return Inertia::render('News', [
@@ -115,7 +115,7 @@ class FrontPostController extends Controller
 
     public function showPost($slug)
     {
-        $user = 'guard';
+        $user = array();
         $role = 'guard';
         if (Auth::check()) {
             if (Auth::user()->hasRole('admin')) {
@@ -135,8 +135,9 @@ class FrontPostController extends Controller
             ->join('users', 'posts.user_id', '=', 'users.id')
             ->where('posts.slug', '=', $slug)
             ->get();
-        $tags = Tag::latest()->take(7)->get();
+        $tags = Tag::latest()->get();
         $categories = Category::latest()->get();
+        // return dd($user);
         return Inertia::render('Post', [
             'user' => $user,
             'post' => $post,
@@ -151,7 +152,7 @@ class FrontPostController extends Controller
     public function tagNews($slug)
     {
 
-        $user = 'guard';
+        $user = array();
         $role = 'guard';
         if (Auth::check()) {
             if (Auth::user()->hasRole('admin')) {
@@ -174,7 +175,7 @@ class FrontPostController extends Controller
         $postLatestSideBar = Post::select('posts.cover', 'posts.title', 'posts.created_at', 'posts.slug', 'posts.meta_desc', 'categories.name as category_name', 'categories.id as category_id', 'categories.slug as category_slug')
             ->join('categories', 'posts.category_id', '=', 'categories.id')
             ->latest()->take(5)->get();
-        $tags = Tag::latest()->take(7)->get();
+        $tags = Tag::latest()->get();
         $categories = Category::latest()->get();
         return Inertia::render(
             'News',

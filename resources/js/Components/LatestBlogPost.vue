@@ -10,28 +10,28 @@
 
     <div class="max-w-screen-lg mx-auto mb-16">
         <div class="rounded overflow-hidden flex flex-col mx-auto text-center">
-            <a href="#">
-                <img class="w-full my-4" src="https://images.pexels.com/photos/5120892/pexels-photo-5120892.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=625.0&sharp=10&w=1500" alt="Sunset in the mountains">
-            </a>
-            <a href="#" class="text-green-village max-w-3xl mx-auto text-xl sm:text-4xl font-semibold inline-block text-zinc-500 transition duration-500 ease-in-out inline-block mb-2">The Best Activewear from the Nordstrom Anniversary Sale</a>
+            <Link :href="route('front.posts.show',postLatest[0].slug)">
+                <div class="w-full max-h-96 h-60 md:h-96 bg-center bg-cover my-4" :style="'background-image:url('+postLatest[0].cover+')'"></div>
+            </Link>
+            <Link :href="route('front.posts.show',postLatest[0].slug)" class="text-green-village max-w-3xl mx-auto text-xl sm:text-4xl font-semibold text-zinc-500 transition duration-500 ease-in-out inline-block mb-2"> {{ postLatest[0].title }} </Link>
             <p class="text-zinc-500 text-base leading-8 max-w-2xl mx-auto">
-                Machu Picchu is a 15th-century Inca citadel situated on a mountain ridge 2,430 metres (7,970 ft) above sea level. It is located in the Cusco Region.
+                {{ postLatest[0].meta_desc }}
             </p>
             <div class="py-5 text-sm font-regular text-gray-900 flex items-center justify-center">
                 <span class="mr-3 flex flex-row items-center">
                     <RemixIcon :icon="'time-fill'" style="width:13px; fill:#6f8744;"></RemixIcon>
-                    <span class="ml-1 text-zinc-500 text-green-village">6 mins ago</span>
+                    <span class="ml-1 text-zinc-500 text-green-village"> {{ moment(postLatest[0].created_at).fromNow()}} </span>
                 </span>
-                <a href="#" class="flex flex-row items-center hover:text-indigo-600  mr-3">
+                <Link href="#" class="flex flex-row items-center hover:text-indigo-600  mr-3">
                     <RemixIcon :icon="'user-fill'" style="width:13px; fill:#6f8744;"></RemixIcon>
-                    <span class="ml-1 text-zinc-500 text-green-village">AliSher Azimi</span>
-                </a>
-                <a href="#" class="flex flex-row items-center hover:text-indigo-600">
+                    <span class="ml-1 text-zinc-500 text-green-village"> {{ postLatest[0].user_name }} </span>
+                </Link>
+                <Link :href="route('front.posts.categories',postLatest[0].category_slug )" class="flex flex-row items-center hover:text-indigo-600">
                     <RemixIcon :icon="'flag-fill'" style="width:13px; fill:#6f8744;"></RemixIcon>
-                    <span class="ml-1 text-zinc-500 text-green-village">activewear</span>
-                </a>
+                    <span class="ml-1 text-zinc-500 text-green-village"> {{ postLatest[0].category_name }} </span>
+                </Link>
             </div>
-            <hr/>
+            <hr />
 
         </div>
     </div>
@@ -39,95 +39,95 @@
     <div class="max-w-screen-xl mx-auto px-5 sm:px-10 md:px-16">
         <div class="grid grid-cols-1 xl:grid-cols-3 sm:grid-cols-2 gap-10">
             <div class="rounded overflow-hidden shadow-lg">
-                <a href="#">
+                <Link :href="route('front.posts.show',postLatest[1].slug)">
                     <div class="relative">
-                        <img class="w-full" src="https://images.pexels.com/photos/196667/pexels-photo-196667.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Sunset in the mountains">
+                        <div class="w-full h-60 bg-center bg-cover" :style="'background-image:url('+postLatest[1].cover+')'"></div>
                         <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
-                        <a href="#!">
+                        <Link :href="route('front.posts.categories',postLatest[1].category_slug )">
                             <div class="absolute bottom-0 left-0 bg-green-village px-4 py-2 text-white text-sm hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                                Photos
+                                {{ postLatest[1].category_name }}
                             </div>
-                        </a>
+                        </Link>
                         <a href="!#">
                             <div class="text-sm absolute top-0 right-0 bg-green-village px-4 text-white rounded-full h-16 w-16 flex flex-col items-center justify-center mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                                <span class="font-bold">27</span>
-                                <small>March</small>
+                                <span class="font-bold">{{ moment(postLatest[1].created_at).format("DD")}}</span>
+                                <small>{{ moment(postLatest[1].created_at).format("MMMM")}}</small>
                             </div>
                         </a>
                     </div>
-                </a>
+                </Link>
                 <div class="px-6 py-4">
-                    <a href="#" class="text-green-village font-semibold text-lg inline-block text-zinc-500 transition duration-500 ease-in-out">Best View in Newyork City</a>
+                    <Link :href="route('front.posts.show',postLatest[1].slug)" class="text-green-village font-semibold text-lg inline-block text-zinc-500 transition duration-500 ease-in-out"> {{ postLatest[1].title }} </Link>
                     <p class="text-gray-500 text-sm">
-                        The city that never sleeps
+                        {{ postLatest[1].meta_desc }}
                     </p>
                 </div>
                 <div class="px-6 py-4 flex flex-row items-center">
                     <span href="#" class="py-1 text-sm font-regular text-gray-900 mr-1 flex flex-row items-center">
                         <RemixIcon :icon="'time-fill'" style="width:13px; fill:#6f8744;"></RemixIcon>
-                        <span class="ml-1 text-zinc-500">6 mins ago</span>
+                        <span class="ml-1 text-zinc-500"> {{ moment(postLatest[1].created_at).fromNow()}} </span>
                     </span>
                 </div>
             </div>
             <div class="rounded overflow-hidden shadow-lg">
-                <a href="#">
+                <Link :href="route('front.posts.show',postLatest[2].slug)">
                     <div class="relative">
-                        <img class="w-full" src="https://images.pexels.com/photos/1653877/pexels-photo-1653877.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Sunset in the mountains">
+                        <div class="w-full h-60 bg-center bg-cover" :style="'background-image:url('+postLatest[2].cover+')'"></div>
                         <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
-                        <a href="#!">
+                        <Link :href="route('front.posts.categories',postLatest[2].category_slug )">
                             <div class="absolute bottom-0 left-0 bg-green-village px-4 py-2 text-white text-sm hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                                Photos
+                                {{ postLatest[2].category_name }}
                             </div>
-                        </a>
+                        </Link>
                         <a href="!#">
                             <div class="text-sm absolute top-0 right-0 bg-green-village px-4 text-white rounded-full h-16 w-16 flex flex-col items-center justify-center mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                                <span class="font-bold">20</span>
-                                <small>March</small>
+                                <span class="font-bold">{{ moment(postLatest[2].created_at).format("DD")}}</span>
+                                <small>{{ moment(postLatest[2].created_at).format("MMMM")}}</small>
                             </div>
                         </a>
                     </div>
-                </a>
+                </Link>
                 <div class="px-6 py-4">
-                    <a href="#" class="text-green-village font-semibold text-lg inline-block text-zinc-500 transition duration-500 ease-in-out">Best Pizza in Town</a>
+                    <Link :href="route('front.posts.show',postLatest[2].slug)" class="text-green-village font-semibold text-lg inline-block text-zinc-500 transition duration-500 ease-in-out"> {{ postLatest[2].title }} </Link>
                     <p class="text-gray-500 text-sm">
-                        The collection of best pizza images in Newyork city
+                        {{ postLatest[2].meta_desc }}
                     </p>
                 </div>
                 <div class="px-6 py-4 flex flex-row items-center">
-                    <span href="#" class="py-1 text-sm font-regular text-gray-900 mr-1 flex flex-row justify-between items-center">
+                    <span href="#" class="py-1 text-sm font-regular text-gray-900 mr-1 flex flex-row items-center">
                         <RemixIcon :icon="'time-fill'" style="width:13px; fill:#6f8744;"></RemixIcon>
-                        <span class="ml-1 text-zinc-500">3 mins read</span>
+                        <span class="ml-1 text-zinc-500"> {{ moment(postLatest[2].created_at).fromNow()}} </span>
                     </span>
                 </div>
             </div>
             <div class="rounded overflow-hidden shadow-lg">
-                <a href="#">
+                <Link :href="route('front.posts.show',postLatest[3].slug)">
                     <div class="relative">
-                        <img class="w-full" src="https://images.pexels.com/photos/257816/pexels-photo-257816.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Sunset in the mountains">
+                        <div class="w-full h-60 bg-center bg-cover" :style="'background-image:url('+postLatest[3].cover+')'"></div>
                         <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
-                        <a href="#!">
+                        <Link :href="route('front.posts.categories',postLatest[3].category_slug )">
                             <div class="absolute bottom-0 left-0 bg-green-village px-4 py-2 text-white text-sm hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                                Photos
+                                {{ postLatest[3].category_name }}
                             </div>
-                        </a>
+                        </Link>
                         <a href="!#">
                             <div class="text-sm absolute top-0 right-0 bg-green-village px-4 text-white rounded-full h-16 w-16 flex flex-col items-center justify-center mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                                <span class="font-bold">15</span>
-                                <small>April</small>
+                                <span class="font-bold">{{ moment(postLatest[3].created_at).format("DD")}}</span>
+                                <small>{{ moment(postLatest[3].created_at).format("MMMM")}}</small>
                             </div>
                         </a>
                     </div>
-                </a>
+                </Link>
                 <div class="px-6 py-4">
-                    <a href="#" class="text-green-village font-semibold text-lg inline-block text-zinc-500 transition duration-500 ease-in-out">Best Salad Images ever</a>
+                    <Link :href="route('front.posts.show',postLatest[3].slug)" class="text-green-village font-semibold text-lg inline-block text-zinc-500 transition duration-500 ease-in-out"> {{ postLatest[3].title }} </Link>
                     <p class="text-gray-500 text-sm">
-                        The collection of best salads of town in pictures
+                        {{ postLatest[3].meta_desc }}
                     </p>
                 </div>
                 <div class="px-6 py-4 flex flex-row items-center">
-                    <span href="#" class="py-1 text-sm font-regular text-gray-900 mr-1 flex flex-row justify-between items-center">
+                    <span href="#" class="py-1 text-sm font-regular text-gray-900 mr-1 flex flex-row items-center">
                         <RemixIcon :icon="'time-fill'" style="width:13px; fill:#6f8744;"></RemixIcon>
-                        <span class="ml-1 text-zinc-500">6 mins read</span>
+                        <span class="ml-1 text-zinc-500"> {{ moment(postLatest[3].created_at).fromNow()}} </span>
                     </span>
                 </div>
             </div>
@@ -142,28 +142,41 @@
 body {
     font-family: 'Poppins', sans-serif !important;
 }
+
 .text-green-village:hover {
     color: #6f8744;
 }
+
 .bg-green-village {
     background-color: #6f8744;
 }
+
 .bg-green-village:hover {
-    color : #6f8744;
+    color: #6f8744;
     background-color: white;
 }
 </style>
 
 <script>
+import {
+    Link
+} from '@inertiajs/inertia-vue3';
 import RemixIcon from './RemixIcons.vue';
+import moment from 'moment';
+moment.locale('id');
 export default {
-    components : {
-        RemixIcon
+    components: {
+        RemixIcon,
+        Link
     },
     data() {
         return {
-            url: '<!-- Credit: Componentity.com -->'
+            url: '<!-- Credit: Componentity.com -->',
+            moment: moment
         }
+    },
+    props: {
+        postLatest: Object
     }
 }
 </script>

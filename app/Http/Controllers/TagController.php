@@ -15,11 +15,20 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $tags = Tag::all();
-        return Inertia('TagDashboard',['tags' => $tags,'user' => $user]);
+        $tags = Tag::latest()->simplePaginate(10);
+        $keyword = $request->input('keyword');
+        if ($keyword != '') {
+            // return dd($keyword);
+            $tags = Tag::select('tags.id', 'tags.name', 'tags.keywords','tags.created_at')
+                ->where('tags.name', 'LIKE', "%{$keyword}%")
+                ->orWhere('tags.keywords', 'LIKE', "%{$keyword}%")
+                ->latest()
+                ->simplePaginate(10);
+        }
+        return Inertia('TagDashboard',['tags' => $tags,'user' => $user, 'keyword' => $keyword]);
     }
 
     /**
@@ -42,8 +51,8 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            "name" => ['required', 'unique:tags'],
-            "slug" => ['required', 'unique:tags'],
+            "name" => ['required', 'unique:tags,name'],
+            "slug" => ['required', 'unique:tags,slug'],
             "keywords" => ['required'],
             "meta_desc" => ['required']
         ]);
@@ -99,8 +108,8 @@ class TagController extends Controller
     public function update(Request $request, $id)
     {
         $validate = $request->validate([
-            "name" => ['required', 'unique:categories'],
-            "slug" => ['required', 'unique:categories'],
+            "name" => ['required', 'unique:tags,name'.$id],
+            "slug" => ['required', 'unique:tags,name'.$id],
             "keywords" => ['required'],
             "meta_desc" => ['required']
         ]);

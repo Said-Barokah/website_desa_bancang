@@ -23,22 +23,24 @@ class AccountSettingController extends Controller
         $validate = Validator::make($request->all(),[
             "name" => ['required'],
         ]);
-        if($request->file('path_profile_photo')->extension()!='jpg'|| $request->file('path_profile_photo')->extension()!='png' || $request->file('path_profile_photo')->extension()!='jpeg'){
-            return Redirect::back()->with(['message' => "Cek lagi inputan anda", "action" => 'error']);
-        }
-        $auth = Auth::user();
-        $new_photo_path = $request->file('path_profile_photo');
-        if ($new_photo_path) {
-            $sub_path_profile_photo = substr("$auth->path_profile_photo", 8);
-            if ($auth->path_profile_photo && Storage::disk('public')->exists($sub_path_profile_photo)) {
-                Storage::disk('public')->delete($sub_path_profile_photo);
+
+        if($request->file('path_profile_photo') == null || $request->file('path_profile_photo')->extension()=='jpg'|| $request->file('path_profile_photo')->extension()=='png' || $request->file('path_profile_photo')->extension()=='jpeg'){
+            $auth = Auth::user();
+            $new_photo_path = $request->file('path_profile_photo');
+            if ($new_photo_path) {
+                $sub_path_profile_photo = substr("$auth->path_profile_photo", 8);
+                if ($auth->path_profile_photo && Storage::disk('public')->exists($sub_path_profile_photo)) {
+                    Storage::disk('public')->delete($sub_path_profile_photo);
+                }
+                $path_profile_photo = $new_photo_path->store('images/profil', 'public');
+                $auth->path_profile_photo = "/storage/$path_profile_photo";
             }
-            $path_profile_photo = $new_photo_path->store('images/profil', 'public');
-            $auth->path_profile_photo = "/storage/$path_profile_photo";
+            $auth->name = $request->name;
+            $auth->save();
+            return Redirect::back()->with(['message' => "Data berhasil di update", "action" => 'success']);
         }
-        $auth->name = $request->name;
-        $auth->save();
-        return Redirect::back()->with(['message' => "Data berhasil di update", "action" => 'success']);
+        return Redirect::back()->with(['message' => "Cek lagi inputan anda", "action" => 'error']);
+
     }
 
     public function updatePassword(Request $request)

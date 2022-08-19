@@ -1,7 +1,10 @@
 <template>
 <nav class="navbar-flat bg-transparant top-0 left-0 right-0 fixed z-50 px-4 py-4 flex justify-between items-center">
     <a class="text-3xl font-bold leading-none" href="#">
-        <img src="/storage/images/logo/rect59901.png" alt="" class="h-10">
+        <img src="/storage/images/logo/rect59901.png" alt="" class="h-10 inline">
+        <div class="text-[#798e48] inline logo-text">
+            Desa Bancang
+        </div>
     </a>
     <div class="lg:hidden absolute right-0" @click="isHiddenNavbar = !isHiddenNavbar">
         <button class="navbar-burger flex items-center text-black p-3">
@@ -21,7 +24,7 @@
             <Link :href="route('front.posts.index')" class="text-sm text-white font-bold hover:text-slate-200">Artikel</Link>
         </li>
         <li>
-            <Link :href="route('home')" class="text-sm text-white font-bold hover:text-slate-200">Data Desa</Link>
+            <Link @click="submit" class="text-sm text-white font-bold hover:text-slate-200">Data Desa</Link>
         </li>
         <li><a class="text-sm text-white font-bold hover:text-slate-200" href="#">Kontak</a></li>
     </ul>
@@ -40,11 +43,11 @@
                 <li v-show="role!='user'">
                     <Link href="/dashboard" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
                 </li>
-                <li @click="isHiddenAccountSetting = false">
+                <li @click="isHiddenAccountSetting = false" v-show="role=='user'">
                     <button class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</button>
                 </li>
                 <li>
-                    <Link as="button" @click.prevent="logout()" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
+                    <Link  @click.prevent="logout()" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
                 </li>
             </ul>
         </div>
@@ -132,6 +135,7 @@ import AccountSetting from './AccountSetting.vue';
 document.addEventListener('scroll', function () {
     const navbarFlat = document.querySelectorAll('.navbar-flat');
     const listMenu = document.querySelectorAll('.list-menu li a');
+    const logoText = document.querySelector('logo-text')
     if (window.scrollY > 40) {
         navbarFlat[0].classList.remove('bg-transparant')
         navbarFlat[0].classList.add('bg-white')
@@ -163,15 +167,21 @@ export default {
         return{
             isHiddenNavbar : true,
             isHiddenProfileMenu: true,
-            isHiddenAccountSetting:true
+            isHiddenAccountSetting:true,
+            form : {
+                keyword : 'data desa bancang'
+            }
         }
     },
     methods: {
         logout() {
-            this.$inertia.post('logout')
+            this.$inertia.post(route('logout'))
         },
         hiddenAccountSetting(){
             this.isHiddenAccountSetting=true
+        },
+        submit(){
+            this.$inertia.get(route('front.posts.index'), this.form)
         }
     },
 }
